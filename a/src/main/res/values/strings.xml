@@ -1,0 +1,10 @@
+<resources>
+  <string name="app_name">A</string>
+  <public name="aLoading">Loading...</public>
+  <public name="aDefault">Default</public>
+  <public name="aSpace"> </public>
+  <public name="aW">WWWWWWWW</public>
+  <public name="aWW">WWWWWWWWWWWWWWWW</public>
+  <public name="aWWW">WWWWWWWWWWWWWWWWWWWWWWWW</public>
+
+</resources>
