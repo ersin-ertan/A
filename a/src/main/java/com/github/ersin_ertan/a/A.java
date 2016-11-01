@@ -1,4 +1,4 @@
-package com.nullcognition.a;
+package com.github.ersin_ertan.a;
 
 import android.app.AlertDialog;
 import android.content.Context;

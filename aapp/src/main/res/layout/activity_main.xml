@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mmsofts.alib.MainActivity"
+    tools:context="com.mmsofts.alib.com.github.ersin_ertan.aapp.MainActivity"
     >
 
   <TextView
