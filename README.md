@@ -1,10 +1,21 @@
 # A
-module build.gradle
+Module `build.gradle` with version  [![Release](https://jitpack.io/v/ersin-ertan/a.svg)](https://jitpack.io/#ersin-ertan/A)
+```
+dependencies {
+// add line below
+compile 'com.github.ersin-ertan:A:see.jitpack.version'
+}
+```
 
-`dependencies {`
-`compile 'com.github.ersin-ertan:A:` [![Release](https://jitpack.io/v/ersin-ertan/a.svg)](https://jitpack.io/#ersin-ertan/A)
-`}`
-
+Then, app root `build.gradle`
+```
+allprojects {
+  repositories {
+    // add line below
+    maven { url "https://jitpack.io" }
+  }
+}
+```
 ### API ###
 Toast, AlertDialog, ProgressDialog, Internet Connection
 ```java
@@ -20,4 +31,4 @@ pd.cancel();
 Is.inetConnected(this);
 ```
 
-Hosted at https://jitpack.io/#ersin-ertan/A
+Distribution hosted at https://jitpack.io/#ersin-ertan/A
