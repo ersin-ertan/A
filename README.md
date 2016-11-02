@@ -1,5 +1,6 @@
 # A
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)
+compile 'com.github.ersin-ertan:A:[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#User/Repo)'
+
 A for Android power methods, with little impact on permissions(internet so far), and dependencies to other libs. It does common functions in a readable manner.
 
 ```java
