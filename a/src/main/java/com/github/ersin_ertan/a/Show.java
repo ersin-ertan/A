@@ -1,9 +1,9 @@
 package com.github.ersin_ertan.a;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -12,11 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by mms on 11/1/16.
+ * Created by mms on 11/2/16.
  */
 
-public class A {
-
+public class Show {
   public static void toast(@NonNull final Context context, @StringRes int message) {
     toastCenterShow(Toast.makeText(context, context.getString(message), Toast.LENGTH_SHORT));
   }
@@ -97,11 +96,23 @@ public class A {
     adb.create().show();
   }
 
-  public static boolean isInetConnected(Context appContext) {
-    ConnectivityManager cm =
-        (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-    return cm != null && (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo()
-        .isConnected());
+  public static ProgressDialog progressDialog(@NonNull final Context context,
+      @StringRes int message) {
+    ProgressDialog pd = new ProgressDialog(context);
+    pd.setMessage(context.getString(message));
+    pd.setIndeterminate(true);
+    pd.setCanceledOnTouchOutside(false);
+    pd.show();
+    return pd;
   }
 
+  public static ProgressDialog progressDialog(@NonNull final Context context,
+      @NonNull String message) {
+    ProgressDialog pd = new ProgressDialog(context);
+    pd.setMessage(message);
+    pd.setIndeterminate(true);
+    pd.setCanceledOnTouchOutside(false);
+    pd.show();
+    return pd;
+  }
 }

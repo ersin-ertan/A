@@ -22,5 +22,7 @@ android {
 
 dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
-  compile project(":a")
+//  compile project(":a")
+  compile 'com.github.ersin-ertan:A:1.0.1'
+
 }
