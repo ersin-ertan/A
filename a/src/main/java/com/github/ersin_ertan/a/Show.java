@@ -1,13 +1,18 @@
 package com.github.ersin_ertan.a;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,5 +119,20 @@ public class Show {
     pd.setCanceledOnTouchOutside(false);
     pd.show();
     return pd;
+  }
+
+  public static void statusBar(@NonNull final Activity activity) {
+    if (Build.VERSION.SDK_INT < 16) {
+      activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    } else {
+      activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+    }
+  }
+
+  public static void actionBar(@NonNull final Activity activity) {
+    ActionBar actionBar = activity.getActionBar();
+    if (actionBar != null) {
+      actionBar.show();
+    }
   }
 }
