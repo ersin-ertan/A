@@ -4,7 +4,7 @@
 - Hide
 - Is
 
-Toast, AlertDialog, ProgressDialog, Action Bar, System Status Bar, Internet Connection
+Toast, AlertDialog, ProgressDialog, Action Bar, System Status Bar, SoftKeyboard, Internet Connection
 ```java
 Show.toast(this, android.R.string.untitled);
 
@@ -18,6 +18,9 @@ pd.cancel();
 Show.actionBar(this);
 
 Is.inetConnected(this);
+
+Show.softKeyboard(context, view);
+
 ```
 
 ### Dependency ###
