@@ -32,7 +32,7 @@ public class Hide {
     }
   }
 
-  public static void hideSoftKeyboard(@NonNull final Context context, @NonNull final View view) {
+  public static void softKeyboard(@NonNull final Context context, @NonNull final View view) {
     ((InputMethodManager) context.getSystemService(
         Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
