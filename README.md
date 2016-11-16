@@ -1,5 +1,10 @@
 ### API ###
-Toast, AlertDialog, ProgressDialog, Internet Connection
+
+- Show
+- Hide
+- Is
+
+Toast, AlertDialog, ProgressDialog, Action Bar, System Status Bar, Internet Connection
 ```java
 Show.toast(this, android.R.string.untitled);
 
@@ -9,6 +14,8 @@ Show.alertDialogList(new AlertDialog.Builder(this), "title", new CharSequence[] 
 
 ProgressDialog pd = Show.progressDialog(this, String.valueOf(Is.inetConnected(this)));
 pd.cancel();
+
+Show.actionBar(this);
 
 Is.inetConnected(this);
 ```
