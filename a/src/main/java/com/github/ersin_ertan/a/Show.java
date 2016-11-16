@@ -13,6 +13,7 @@ import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -134,5 +135,10 @@ public class Show {
     if (actionBar != null) {
       actionBar.show();
     }
+  }
+
+  public static void softKeyboard(@NonNull final Context context, @NonNull final View view) {
+    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(
+        view, InputMethodManager.SHOW_IMPLICIT);
   }
 }
