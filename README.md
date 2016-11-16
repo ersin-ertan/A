@@ -22,7 +22,7 @@ Is.inetConnected(this);
 
 ### Dependency ###
 Module `build.gradle` with version https://jitpack.io/#ersin-ertan/A
-[![Release](https://jitpack.io/v/ersin-ertan/a.svg)](https://jitpack.io/#ersin-ertan/A)
+[comment]: # ([![Release](https://jitpack.io/v/ersin-ertan/a.svg?style=flat-square)](https://jitpack.io/#ersin-ertan/A))
 ```
 dependencies {
 // add line below
