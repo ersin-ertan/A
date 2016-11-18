@@ -108,6 +108,7 @@ public class Show {
     pd.setMessage(context.getString(message));
     pd.setIndeterminate(true);
     pd.setCanceledOnTouchOutside(false);
+    pd.setCancelable(false);
     pd.show();
     return pd;
   }
@@ -118,6 +119,7 @@ public class Show {
     pd.setMessage(message);
     pd.setIndeterminate(true);
     pd.setCanceledOnTouchOutside(false);
+    pd.setCancelable(false);
     pd.show();
     return pd;
   }
