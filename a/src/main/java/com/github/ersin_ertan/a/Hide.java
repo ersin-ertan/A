@@ -9,11 +9,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import static com.github.ersin_ertan.a.internal.ErrorExceptionMessages.ILLEGAL_INSTANCE;
+
 /**
  * Created by mms on 11/11/16.
  */
 
-public class Hide {
+public final class Hide {
+
+  private Hide() {
+    throw new IllegalStateException(ILLEGAL_INSTANCE);
+  }
 
   public static void statusBar(@NonNull final Activity activity) {
     if (Build.VERSION.SDK_INT < 16) {
