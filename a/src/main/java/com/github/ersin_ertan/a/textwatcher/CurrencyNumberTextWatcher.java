@@ -3,6 +3,7 @@ package com.github.ersin_ertan.a.textwatcher;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.widget.EditText;
+import com.github.ersin_ertan.a.Find;
 import com.github.ersin_ertan.a.Num;
 import java.text.NumberFormat;
 
@@ -12,12 +13,18 @@ import java.text.NumberFormat;
 
 class CurrencyNumberTextWatcher implements android.text.TextWatcher {
 
+  private String before = "";
   private EditText editText;
+
   private String separator;
+  private int separatorLen;
+
   private String currencySymbol;
+  private int currencySymbolLen;
+
   private boolean isCurrencySymbolOnRight;
+
   private NumberFormat numberFormat = NumberFormat.getInstance();
-  private String before;
 
   CurrencyNumberTextWatcher(@NonNull final EditText et, @NonNull final String separator,
       @NonNull final String currencySymbol, final boolean isCurrencySymbolOnRight) {
@@ -26,10 +33,12 @@ class CurrencyNumberTextWatcher implements android.text.TextWatcher {
     this.separator = separator;
     this.currencySymbol = currencySymbol;
     this.isCurrencySymbolOnRight = isCurrencySymbolOnRight;
+    separatorLen = separator.length();
+    currencySymbolLen = currencySymbol.length();
   }
 
   @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    if (s != null && s.length() != 0) before = s.toString();
+    if (s != null) before = s.toString();
   }
 
   @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -39,61 +48,77 @@ class CurrencyNumberTextWatcher implements android.text.TextWatcher {
   @Override public void afterTextChanged(Editable s) {
     editText.removeTextChangedListener(this);
     if (s != null && !s.toString().isEmpty()) {
-      String text = s.toString();
-      text = Num.only(text);
-      if (before != null && before.length() != 0) {
-        if (isCurrencySymbolOnRight) {
-          if (before.substring(0, before.length() - 1).equals(text)) {
-            text = text.substring(0, text.length() - 1);
-          }
-        } else {
-          if (currencySymbol.equals(text)) {
-            text = "";
-          }
-        }
-      }
-      if (!"".equals(text)) {
-        if (text.contains(separator)) {
-          text = text.replace(separator, "");
-        }
-        if (text.contains(currencySymbol)) {
-          text = text.replace(currencySymbol, "");
-        }
-        if (!Character.isDigit(text.charAt(text.length() - 1))) {
-          if (text.length() == 1) {
-            text = "";
-          } else {
-            text = text.substring(0, text.length() - 1);
-          }
-        }
 
-        if (!"".equals(text)) {
-          try {
-            long num = Long.parseLong(text);
-            String formated = numberFormat.format(num);
-            formated = formated.replace(",", separator);
-            if (isCurrencySymbolOnRight) {
-              formated = formated.concat(currencySymbol);
-            } else {
-              formated = currencySymbol.concat(formated);
-            }
-            editText.setText(formated);
-            int i = editText.getText().length();
-            editText.setSelection(i);
-          } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-          } catch (Exception e) {
-            e.printStackTrace();
+      boolean isDone = false;
+      int checkForSymbolDeletionIndex;
+      if (!"".equals(before)) {
+        checkForSymbolDeletionIndex = Find.changeIndex(before, s.toString());
+        // assuming the separator is 1 length
+        try {
+          if (before.charAt(checkForSymbolDeletionIndex) == separator.charAt(0)) {
+            s.toString().charAt(checkForSymbolDeletionIndex);
+            StringBuilder input = new StringBuilder(s.toString());
+            input.setCharAt(checkForSymbolDeletionIndex - 1, ' ');
+            s.clear();
+            s.insert(0, input.toString());
           }
+        } catch (IndexOutOfBoundsException e) {
+
         }
       }
-      if ("".equals(text)) {
+      String after = Num.only(s.toString());
+      if (!"".equals(after)) after = Long.valueOf(after).toString(); // strip trailing 0
+      if ("".equals(after) || "0".equals(after)) {
         if (isCurrencySymbolOnRight) {
           editText.setText("0".concat(currencySymbol));
           editText.setSelection(editText.length());
         } else {
           editText.setText(currencySymbol.concat("0"));
           editText.setSelection(editText.length());
+        }
+        isDone = true;
+      }
+      if (!isDone) {
+        boolean setSelection = true;
+        int diffIndex = Find.changeIndex(Num.only(before), after); // for the new number placement
+        if (diffIndex == -1) {
+          // same number
+          setSelection = false;
+        }
+        try {
+          long num = Long.parseLong(after);
+          if (!"".equals(before) && num > Long.parseLong(Num.only(before))) {
+            ++diffIndex;
+            // if the new number is larger we can know that it was an addition instead of a deletion, increase selection position
+          }
+          String formated = numberFormat.format(num);
+          if (diffIndex > 0) {
+            String startString = formated.substring(0, diffIndex);
+            int countSymbols = startString.length() - startString.replace(separator, "").length();
+            int spaceToMoveSelection = countSymbols * separatorLen;
+            diffIndex += spaceToMoveSelection;
+          } else {
+            if (diffIndex != 0) setSelection = false;
+          }
+
+          formated = formated.replace(",", separator);
+
+          if (isCurrencySymbolOnRight) {
+            formated = formated.concat(currencySymbol);
+          } else {
+            formated = currencySymbol.concat(formated);
+            diffIndex += currencySymbol.length();
+          }
+          editText.setText(formated);
+          if (setSelection) {
+            editText.setSelection(diffIndex);
+          } else {
+            editText.setSelection(formated.length());
+          }
+        } catch (NumberFormatException nfe) {
+          nfe.printStackTrace();
+        } catch (Exception e) {
+          e.printStackTrace();
         }
       }
     }
