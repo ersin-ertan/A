@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import com.github.ersin_ertan.a.Find;
 import com.github.ersin_ertan.a.Num;
 import com.github.ersin_ertan.a.Show;
 import com.github.ersin_ertan.a.textwatcher.TextWatcher;
@@ -45,6 +46,8 @@ public class MainActivity extends Activity {
         clean();
       }
     });
+
+    Show.toast(this, String.valueOf(Find.changeIndex("a", "e")));
   }
 
   void clean() {
